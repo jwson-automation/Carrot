@@ -12,12 +12,13 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   List<Map<String, String>> datas = [];
-  int _currentPageIndex;
+  late int _currentPageIndex;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    _currentPageIndex = 0;
     datas = [
       {
         "image": "assets/images/ara-1.jpg",
@@ -213,19 +214,28 @@ class _HomeState extends State<Home> {
   BottomNavigationBarItem _bottomNavigationBarItem(
       String iconName, String label) {
     return BottomNavigationBarItem(
-        icon: SvgPicture.asset(
-          "assets/svg/${iconName}_off.svg",
-          width: 22,
+        icon: Padding(
+          padding: const EdgeInsets.only(bottom: 3),
+          child: SvgPicture.asset(
+            "assets/svg/${iconName}_off.svg",
+            width: 22,
+          ),
         ),
         label: label);
   }
 
   Widget _bottomNavigationBarwidget() {
     return BottomNavigationBar(
+      backgroundColor: Colors.deepPurple[900],
+      selectedItemColor: Colors.white,
+      type: BottomNavigationBarType.fixed,
       onTap: (int index) {
-        print(index);
+        setState(() {
+          _currentPageIndex = index;
+        });
       },
-      currentIndex: ,
+      selectedFontSize: 12,
+      currentIndex: _currentPageIndex,
       items: [
         _bottomNavigationBarItem("home", '홈'),
         _bottomNavigationBarItem("notes", '암흑생활'),
@@ -240,7 +250,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      appBar: _appbarWidget(),
+      // appBar: _appbarWidget(),
       body: _bodyWidget(),
       bottomNavigationBar: _bottomNavigationBarwidget(),
       // bottomNavigationBar: Container(color: Colors.black),
